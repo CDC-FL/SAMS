@@ -287,7 +287,7 @@ class watch():
         self.watch.pack()
         tk.Label(self.watch, bg='#CFD4C5', height='2').grid(row=0)
         # 表格数据
-        tree = ttk.Treeview(self.watch)
+        tree = ttk.Treeview(self.watch, height=15)
         tree.grid(row=1)
         tk.Label(self.watch, bg='#CFD4C5', height='2').grid(row=2)
         tk.Button(self.watch, text='返回主菜单', command=self.back).grid(row=3)
