@@ -298,7 +298,7 @@ class alter():
             con.commit()
             cur.close()
             con.close()
-            messagebox.showerror(title='删除成功!', message='已删除记录！')
+            messagebox.showinfo(title='删除成功!', message='已删除记录！')
             self.input.destroy()
             alter(self.master)
 
