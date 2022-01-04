@@ -272,7 +272,8 @@ class alter():
         tk.Entry(self.input, textvariable=self.english).grid(row=7, column=1)
         self.english.get()
 
-        tk.Label(self.input, bg='#2CDA9D', height='2').grid(row=8)
+        tk.Label(self.input, text='若信息输入错误，可将在信息修改界面，填写要删除学号，并将其他信息填写为0，即可删除记录。',
+                 bg='#2CDA9D', height='2').grid(row=8, columnspan=2)
 
         tk.Button(self.input, text='修改', command=self.alter_data).grid(
             row=9, column=0)
