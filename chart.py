@@ -1,10 +1,12 @@
 import matplotlib.pyplot as plt
 import pymysql
+import numpy
 
 plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
 plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 # 连接数据库
-db = pymysql.connect(host='localhost', user='root', passwd='123456', port=3306, db='SAMS')
+db = pymysql.connect(host='localhost', user='root',
+                     passwd='123456', port=3306, db='SAMS')
 
 # 开启一个游标cursor
 cursor = db.cursor()
@@ -37,6 +39,12 @@ plt.xlabel('姓名')
 plt.ylabel('语文成绩')
 for x, y in enumerate(chinese):
     plt.text(x, y, '%s' % y)
+plt.plot(name, chinese)
+plt.xlabel('姓名')
+plt.ylabel('语文成绩')
+for x, y in enumerate(chinese):
+    plt.text(x, y, '%s' % y)
+
 
 plt.figure()
 plt.bar(name, math)
@@ -44,6 +52,12 @@ plt.xlabel('姓名')
 plt.ylabel('数学成绩')
 for x, y in enumerate(math):
     plt.text(x, y, '%s' % y)
+plt.plot(name, math)
+plt.xlabel('姓名')
+plt.ylabel('数学成绩')
+for x, y in enumerate(math):
+    plt.text(x, y, '%s' % y)
+
 
 plt.figure()
 plt.bar(name, english)
@@ -51,7 +65,14 @@ plt.xlabel('姓名')
 plt.ylabel('英语成绩')
 for x, y in enumerate(english):
     plt.text(x, y, '%s' % y)
+plt.plot(name, english)
+plt.xlabel('姓名')
+plt.ylabel('英语成绩')
+for x, y in enumerate(english):
+    plt.text(x, y, '%s' % y)
 
+
+"""
 # 创建一个figure（一个窗口）来显示折线图
 plt.figure()
 plt.plot(name, chinese)
@@ -73,7 +94,7 @@ plt.xlabel('姓名')
 plt.ylabel('英语成绩')
 for x, y in enumerate(english):
     plt.text(x, y, '%s' % y)
-
+"""
 # 显示图表
 plt.show()
 
