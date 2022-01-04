@@ -47,7 +47,8 @@ class main():
         login_button.grid(row=3, column=0)
         exit_button.grid(row=3, column=1)
         tk.Label(self.main, bg='#3A405A', height='2').grid(row=4, columnspan=2)
-        tk.Button(self.main, text="我还没有注册，点击注册", command=self.register).grid(row=5, columnspan=2)
+        tk.Button(self.main, text="我还没有注册，点击注册",
+                  command=self.register).grid(row=5, columnspan=2)
 
     def register(self):
         self.main.destroy()
@@ -179,14 +180,16 @@ class input():
         tk.Label(self.input, bg='#2CDA9D', height='2').grid(row=8)
 
         tk.Button(self.input, text='录入', command=self.input_data).grid(
-            row=9, column=0)
+            row=9, columnspan=2)
+        tk.Label(self.input, bg='#2CDA9D', height='1').grid(row=10)
         tk.Button(self.input, text='返回主菜单',
-                  command=self.back).grid(row=9, column=1)
-        tk.Label(self.input, bg='#2CDA9D', height='2').grid(row=10)
+                  command=self.back).grid(row=11, columnspan=2)
+        tk.Label(self.input, bg='#2CDA9D', height='1').grid(row=12)
         tk.Button(self.input, text='excel导入',
-                  command=self.excel_input).grid(row=11, column=0)
+                  command=self.excel_input).grid(row=13, columnspan=2)
+        tk.Label(self.input, bg='#2CDA9D', height='1').grid(row=14)
         tk.Button(self.input, text='查看分析',
-                  command=self.watch_analyze).grid(row=11, column=1)
+                  command=self.watch_analyze).grid(row=15, columnspan=2)
 
     def watch_analyze(self):
         messagebox.showinfo(
@@ -357,30 +360,39 @@ class watch():
 
 
 class sign_up():
-    def __init__(self,master):
+    def __init__(self, master):
         self.name = tk.StringVar()
         self.password = tk.StringVar()
         self.re_password = tk.StringVar()
         self.master = master
-        self.master.config(bg='#CFD4C5')
-        self.sign_up = tk.Frame(self.master, bg='#CFD4C5')
+        self.master.config(bg='#845A6D')
+        self.sign_up = tk.Frame(self.master, bg='#845A6D')
         self.sign_up.pack()
 
-        tk.Label(self.sign_up, text='请输入用户名：', bg='#CFD4C5', fg='white', font=('', 20), height='3').grid(row=0, column=0)
+        tk.Label(self.sign_up, text='请输入用户名：', bg='#845A6D', fg='white',
+                 font=('', 20), height='3').grid(row=0, column=0)
         tk.Entry(self.sign_up, textvariable=self.name).grid(row=0, column=1)
         self.name.get()
 
-        tk.Label(self.sign_up, text='请输入密码：', bg='#CFD4C5', fg='white', font=('', 20), height='3').grid(row=1, column=0)
-        tk.Entry(self.sign_up, textvariable=self.password).grid(row=1, column=1)
+        tk.Label(self.sign_up, text='请输入密码：', bg='#845A6D', fg='white',
+                 font=('', 20), height='3').grid(row=1, column=0)
+        tk.Entry(self.sign_up, textvariable=self.password, show='*').grid(
+            row=1, column=1)
         self.password.get()
 
-        tk.Label(self.sign_up, text='请再输入一遍密码：', bg='#CFD4C5', fg='white', font=('', 20), height='3').grid(row=2, column=0)
-        tk.Entry(self.sign_up, textvariable=self.re_password).grid(row=2, column=1)
+        tk.Label(self.sign_up, text='请再输入一遍密码：', bg='#845A6D',
+                 fg='white', font=('', 20), height='3').grid(row=2, column=0)
+        tk.Entry(self.sign_up, textvariable=self.re_password, show='*').grid(
+            row=2, column=1)
         self.re_password.get()
-        tk.Label(self.sign_up, bg='#CFD4C5', height='2').grid(row=3, columnspan=2)
-        tk.Button(self.sign_up, text='我已确认信息，执行注册', command=self.register).grid(row=4, columnspan=2)
-        tk.Label(self.sign_up, bg='#CFD4C5', height='2').grid(row=5, columnspan=2)
-        tk.Button(self.sign_up, text='返回登录界面', command=self.back).grid(row=6, columnspan=2)
+        tk.Label(self.sign_up, bg='#845A6D',
+                 height='2').grid(row=3, columnspan=2)
+        tk.Button(self.sign_up, text='我已确认信息，执行注册',
+                  command=self.register).grid(row=4, columnspan=2)
+        tk.Label(self.sign_up, bg='#845A6D',
+                 height='2').grid(row=5, columnspan=2)
+        tk.Button(self.sign_up, text='返回登录界面',
+                  command=self.back).grid(row=6, columnspan=2)
 
     def back(self):
         self.sign_up.destroy()
@@ -388,21 +400,25 @@ class sign_up():
 
     def register(self):
         if self.password.get() != self.re_password.get():
-            messagebox.showerror(title='注册失败!', message='请检查您两次输入的密码是否一致！')  # 错误提醒
+            messagebox.showerror(
+                title='注册失败!', message='请检查您两次输入的密码是否一致！')  # 错误提醒
         else:
-            conn = pymysql.connect(host='127.0.0.1',port=3306,user='root',password='123456',db='SAMS',charset='utf8mb4',cursorclass=pymysql.cursors.DictCursor)
-            cursor=conn.cursor()
-            row_count = cursor.execute("select * from login where usr ='"+self.name.get()+"'")
+            conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', password='123456',
+                                   db='SAMS', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+            cursor = conn.cursor()
+            row_count = cursor.execute(
+                "select * from login where usr ='"+self.name.get()+"'")
             #print(row_count)
-            if row_count==0:
-                cursor.execute("insert into login(usr,pwd) values ('"+self.name.get()+"','"+self.password.get()+"')")
+            if row_count == 0:
+                cursor.execute("insert into login(usr,pwd) values ('"
+                               + self.name.get()+"','"+self.password.get()+"')")
                 conn.commit()
                 messagebox.showinfo(title='注册成功！', message='您已成为SAMS用户，祝您使用愉快')
                 self.sign_up.destroy()
                 menu(self.master)
             else:
-                messagebox.showerror(title='注册失败!', message='请更换当前用户名，该用户名已经存在！')  # 错误提醒
-
+                messagebox.showerror(
+                    title='注册失败!', message='请更换当前用户名，该用户名已经存在！')  # 错误提醒
 
 
 if __name__ == '__main__':
