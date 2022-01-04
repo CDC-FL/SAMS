@@ -293,7 +293,16 @@ class alter():
             ), self.gender.get(), self.chinese.get(), self.math.get(),
             self.english.get(), self.ID.get())
         list.append(value)
-        if list == [('', '', '', '', '', '', '', '')]:
+        if self.name.get() == '0' and self.classnum.get() == '0' and self.gender.get() == '0' and self.chinese.get() == '0' and self.math.get() == '0' and self.english.get() == '0':
+            cur.execute("delete from stu where id='"+self.ID.get()+"'")
+            con.commit()
+            cur.close()
+            con.close()
+            messagebox.showerror(title='删除成功!', message='已删除记录！')
+            self.input.destroy()
+            alter(self.master)
+
+        elif list == [('', '', '', '', '', '', '', '')]:
             messagebox.showerror(title='错误!', message='请检查是否录入记录！')
         else:
             cur.executemany(sql, list)
