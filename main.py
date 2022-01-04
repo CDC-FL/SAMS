@@ -13,7 +13,8 @@ class basedesk():
         self.root.title('SAMS')
         self.root.iconbitmap("image\\GenericBox.ico")
         self.root.geometry('800x600')
-        tk.Label(root, text='学生成绩管理系统', font=("华文行楷", 60), fg='#D8DC6A', bg="#6689A1").pack()
+        tk.Label(root, text='学生成绩管理系统', font=("华文行楷", 60),
+                 fg='#D8DC6A', bg="#6689A1").pack()
         main(self.root)
 
 
@@ -26,10 +27,12 @@ class main():
         # 基准界面main
         self.main = tk.Frame(self.master, bg='#3A405A')
         self.main.pack()
-        usr_label = tk.Label(self.main, text='用户名：', bg='#3A405A', fg='white', font=('', 30), height='3')
+        usr_label = tk.Label(self.main, text='用户名：', bg='#3A405A',
+                             fg='white', font=('', 30), height='3')
         usr_entry = tk.Entry(self.main, textvariable=self.usr)
         self.usr.get()
-        pwd_label = tk.Label(self.main, text=' 密码：', bg='#3A405A', fg='white', font=('', 30), height='3')
+        pwd_label = tk.Label(self.main, text=' 密码：', bg='#3A405A',
+                             fg='white', font=('', 30), height='3')
         pwd_entry = tk.Entry(self.main, show="*", textvariable=self.pwd)
         self.pwd.get()
         login_button = tk.Button(self.main, text='登录', command=self.login)
@@ -43,6 +46,12 @@ class main():
         tk.Label(self.main, bg='#3A405A', height='2').grid(row=2)
         login_button.grid(row=3, column=0)
         exit_button.grid(row=3, column=1)
+        tk.Label(self.main, bg='#3A405A', height='2').grid(row=4, columnspan=2)
+        tk.Button(self.main, text="我还没有注册，点击注册", command=self.register).grid(row=5, columnspan=2)
+
+    def register(self):
+        self.main.destroy()
+        sign_up(self.master)
 
     def login(self):
         # 登录界面login
@@ -54,7 +63,8 @@ class main():
                                charset='utf8mb4',
                                cursorclass=pymysql.cursors.DictCursor)
         cur = conn.cursor()
-        cur.execute("select * from login where usr='" + self.usr.get() + "' and pwd='" + self.pwd.get() + "'")
+        cur.execute("select * from login where usr='"
+                    + self.usr.get() + "' and pwd='" + self.pwd.get() + "'")
         # print(self.usr.get())
         # print(self.pwd.get())
         if cur.fetchone() is not None:
@@ -63,7 +73,8 @@ class main():
             cur.close()
             conn.close()
         else:
-            messagebox.showerror(title='连接错误!', message='请检查用户名与密码是否输入正确')  # 错误提醒
+            messagebox.showerror(
+                title='连接错误!', message='请检查用户名与密码是否输入正确')  # 错误提醒
             # self.main.destroy()
             # menu(self.master)
 
@@ -78,9 +89,12 @@ class menu():
         self.master.config(bg='#AEC5EB')
         self.menu = tk.Frame(self.master, bg='#AEC5EB')
         self.menu.pack()
-        input_button = tk.Button(self.menu, text='录入记录', font=("", 30), command=self.input)
-        watch_button = tk.Button(self.menu, text='查看记录', font=("", 30), command=self.watch)
-        alter_button = tk.Button(self.menu, text='修改记录', font=("", 30), command=self.alter)
+        input_button = tk.Button(
+            self.menu, text='录入记录', font=("", 30), command=self.input)
+        watch_button = tk.Button(
+            self.menu, text='查看记录', font=("", 30), command=self.watch)
+        alter_button = tk.Button(
+            self.menu, text='修改记录', font=("", 30), command=self.alter)
         back_button = tk.Button(self.menu, text='使用其他用户登录', command=self.back)
         exit_button = tk.Button(self.menu, text='退出SAMS', command=self.exit)
         tk.Label(self.menu, bg='#AEC5EB', height='2').grid(row=0)
@@ -164,17 +178,23 @@ class input():
 
         tk.Label(self.input, bg='#2CDA9D', height='2').grid(row=8)
 
-        tk.Button(self.input, text='录入', command=self.input_data).grid(row=9, column=0)
-        tk.Button(self.input, text='返回主菜单', command=self.back).grid(row=9, column=1)
+        tk.Button(self.input, text='录入', command=self.input_data).grid(
+            row=9, column=0)
+        tk.Button(self.input, text='返回主菜单',
+                  command=self.back).grid(row=9, column=1)
         tk.Label(self.input, bg='#2CDA9D', height='2').grid(row=10)
-        tk.Button(self.input, text='excel导入', command=self.excel_input).grid(row=11, column=0)
-        tk.Button(self.input, text='查看分析', command=self.watch_analyze).grid(row=11, column=1)
+        tk.Button(self.input, text='excel导入',
+                  command=self.excel_input).grid(row=11, column=0)
+        tk.Button(self.input, text='查看分析',
+                  command=self.watch_analyze).grid(row=11, column=1)
 
     def watch_analyze(self):
-        messagebox.showinfo(title='分析结果', message=analyze.analyze('SAMS', 'stu'))
+        messagebox.showinfo(
+            title='分析结果', message=analyze.analyze('SAMS', 'stu'))
 
     def excel_input(self):
-        messagebox.showinfo(title='录入成功', message=exinput.store_to('SAMS', 'stu', 'Template_File.xls'))
+        messagebox.showinfo(title='录入成功', message=exinput.store_to(
+            'SAMS', 'stu', 'Template_File.xls'))
 
     def back(self):
         self.input.destroy()
@@ -182,13 +202,15 @@ class input():
 
     def input_data(self):
         list = []
-        con = pymysql.connect(host='localhost', user='root', password='123456', database='SAMS', port=3306)
+        con = pymysql.connect(host='localhost', user='root',
+                              password='123456', database='SAMS', port=3306)
         # 创建游标对象
         cur = con.cursor()
         # 编写插入数据的sql
         sql = 'INSERT INTO stu(id,name,classnum,gender,chinese,math,english)VALUES(%s,%s,%s,%s,%s,%s,%s)'
         value = (
-            self.ID.get(), self.name.get(), self.classnum.get(), self.gender.get(), self.chinese.get(), self.math.get(),
+            self.ID.get(), self.name.get(), self.classnum.get(
+            ), self.gender.get(), self.chinese.get(), self.math.get(),
             self.english.get())
         list.append(value)
         if list == [('', '', '', '', '', '', '')]:
@@ -249,19 +271,23 @@ class alter():
 
         tk.Label(self.input, bg='#2CDA9D', height='2').grid(row=8)
 
-        tk.Button(self.input, text='修改', command=self.alter_data).grid(row=9, column=0)
-        tk.Button(self.input, text='返回主菜单', command=self.back).grid(row=9, column=1)
+        tk.Button(self.input, text='修改', command=self.alter_data).grid(
+            row=9, column=0)
+        tk.Button(self.input, text='返回主菜单',
+                  command=self.back).grid(row=9, column=1)
 
     def alter_data(self):
         list = []
-        con = pymysql.connect(host='localhost', user='root', password='123456', database='SAMS', port=3306)
+        con = pymysql.connect(host='localhost', user='root',
+                              password='123456', database='SAMS', port=3306)
         # 创建游标对象
         cur = con.cursor()
         # 编写插入数据的sql
         # sql = 'INSERT INTO stu(id,name,classnum,gender,chinese,math,english)VALUES(%s,%s,%s,%s,%s,%s,%s)'
         sql = "update stu set id=%s,name=%s,classnum=%s,gender=%s,chinese=%s,math=%s,english=%s where id=%s"
         value = (
-            self.ID.get(), self.name.get(), self.classnum.get(), self.gender.get(), self.chinese.get(), self.math.get(),
+            self.ID.get(), self.name.get(), self.classnum.get(
+            ), self.gender.get(), self.chinese.get(), self.math.get(),
             self.english.get(), self.ID.get())
         list.append(value)
         if list == [('', '', '', '', '', '', '', '')]:
@@ -328,6 +354,55 @@ class watch():
     def back(self):
         self.watch.destroy()
         menu(self.master)
+
+
+class sign_up():
+    def __init__(self,master):
+        self.name = tk.StringVar()
+        self.password = tk.StringVar()
+        self.re_password = tk.StringVar()
+        self.master = master
+        self.master.config(bg='#CFD4C5')
+        self.sign_up = tk.Frame(self.master, bg='#CFD4C5')
+        self.sign_up.pack()
+
+        tk.Label(self.sign_up, text='请输入用户名：', bg='#CFD4C5', fg='white', font=('', 20), height='3').grid(row=0, column=0)
+        tk.Entry(self.sign_up, textvariable=self.name).grid(row=0, column=1)
+        self.name.get()
+
+        tk.Label(self.sign_up, text='请输入密码：', bg='#CFD4C5', fg='white', font=('', 20), height='3').grid(row=1, column=0)
+        tk.Entry(self.sign_up, textvariable=self.password).grid(row=1, column=1)
+        self.password.get()
+
+        tk.Label(self.sign_up, text='请再输入一遍密码：', bg='#CFD4C5', fg='white', font=('', 20), height='3').grid(row=2, column=0)
+        tk.Entry(self.sign_up, textvariable=self.re_password).grid(row=2, column=1)
+        self.re_password.get()
+        tk.Label(self.sign_up, bg='#CFD4C5', height='2').grid(row=3, columnspan=2)
+        tk.Button(self.sign_up, text='我已确认信息，执行注册', command=self.register).grid(row=4, columnspan=2)
+        tk.Label(self.sign_up, bg='#CFD4C5', height='2').grid(row=5, columnspan=2)
+        tk.Button(self.sign_up, text='返回登录界面', command=self.back).grid(row=6, columnspan=2)
+
+    def back(self):
+        self.sign_up.destroy()
+        main(self.master)
+
+    def register(self):
+        if self.password.get() != self.re_password.get():
+            messagebox.showerror(title='注册失败!', message='请检查您两次输入的密码是否一致！')  # 错误提醒
+        else:
+            conn = pymysql.connect(host='127.0.0.1',port=3306,user='root',password='123456',db='SAMS',charset='utf8mb4',cursorclass=pymysql.cursors.DictCursor)
+            cursor=conn.cursor()
+            row_count = cursor.execute("select * from login where usr ='"+self.name.get()+"'")
+            #print(row_count)
+            if row_count==0:
+                cursor.execute("insert into login(usr,pwd) values ('"+self.name.get()+"','"+self.password.get()+"')")
+                conn.commit()
+                messagebox.showinfo(title='注册成功！', message='您已成为SAMS用户，祝您使用愉快')
+                self.sign_up.destroy()
+                menu(self.master)
+            else:
+                messagebox.showerror(title='注册失败!', message='请更换当前用户名，该用户名已经存在！')  # 错误提醒
+
 
 
 if __name__ == '__main__':
