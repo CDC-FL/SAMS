@@ -75,7 +75,7 @@ class main():
             conn.close()
         else:
             messagebox.showerror(
-                title='连接错误!', message='请检查用户名与密码是否输入正确')  # 错误提醒
+                title='登录错误!', message='请检查用户名与密码是否输入正确')  # 错误提醒
             # self.main.destroy()
             # menu(self.master)
 
@@ -217,7 +217,7 @@ class input():
             self.english.get())
         list.append(value)
         if list == [('', '', '', '', '', '', '')]:
-            messagebox.showerror(title='错误!', message='请检查是否录入记录！')
+            messagebox.showerror(title='错误!', message='请检查是否为空记录！')
         else:
             cur.executemany(sql, list)
             con.commit()
@@ -272,7 +272,7 @@ class alter():
         tk.Entry(self.input, textvariable=self.english).grid(row=7, column=1)
         self.english.get()
 
-        tk.Label(self.input, text='若信息输入错误，可将在信息修改界面，填写要删除学号，并将其他信息填写为0，即可删除记录。',
+        tk.Label(self.input, text='若信息输入错误，像删除记录，可填写要删除学号，并将其他信息填写为0，即可删除记录。',
                  bg='#2CDA9D', height='2').grid(row=8, columnspan=2)
 
         tk.Button(self.input, text='修改', command=self.alter_data).grid(
@@ -297,7 +297,7 @@ class alter():
         row_count = cur.execute(
             "select * from stu where id ='"+self.ID.get()+"'")
         if row_count == 0:
-            messagebox.showerror(title='错误!', message='未查询到当前记录！')
+            messagebox.showerror(title='查询错误!', message='未查询到当前记录！')
         else:
             if self.name.get() == '0' and self.classnum.get() == '0' and self.gender.get() == '0' and self.chinese.get() == '0' and self.math.get() == '0' and self.english.get() == '0':
                 cur.execute("delete from stu where id='"+self.ID.get()+"'")
@@ -309,7 +309,7 @@ class alter():
                 alter(self.master)
 
             elif list == [('', '', '', '', '', '', '', '')]:
-                messagebox.showerror(title='错误!', message='请检查是否录入记录！')
+                messagebox.showerror(title='修改错误!', message='请检查是否为空记录！')
             else:
                 cur.executemany(sql, list)
                 con.commit()
